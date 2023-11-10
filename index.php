@@ -124,6 +124,7 @@ echo $user?->name . ' ' . $user?->age . ' ' . ($user?->address()?->country() ?? 
 
 // Union Types
 
+/*
 class User
 {
     public function __construct(public string $name, public int $age)
@@ -139,3 +140,22 @@ class User
 $user = new User('John', 45);
 
 print_r($user->foo([1, 2, 3]));
+*/
+
+// New features
+
+var_dump(str_contains('some huge sentence bla bla', 'bla'));
+
+var_dump(str_starts_with('haystack', 'hay'));
+
+var_dump(str_ends_with('haystack', 'stack'));
+
+echo 'sum: ' . 1 + 1;
+
+$array_0 = array_fill(0, 4, true);
+$array_1 = array_fill(1, 4, true);
+$array_5 = array_fill(-5, 4, true);
+
+var_dump($array_0);
+var_dump($array_1);
+var_dump($array_5);
