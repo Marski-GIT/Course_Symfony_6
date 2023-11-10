@@ -24,7 +24,6 @@ switch ($name) {
     default:
         $message = 'Hello unknown';
 }
-*/
 
 $message = match ($name) {
     'Robert'      => 'Hello Robert',
@@ -35,3 +34,30 @@ $message = match ($name) {
 };
 
 echo $message;
+*/
+
+
+function person($name, $lastName, $age, $address = null, $bio = null): void
+{
+    echo 'Hello ' . $name . ' ' . $lastName . '. You are ' . $age . ' years old.';
+
+    if ($address) echo ' You live in: ' . $address;
+    if ($bio) echo ' This is your bio: ' . $bio;
+}
+
+//person('Robert', 'Apollo', 14, null, 'My bio');
+
+person(name: 'Robert', lastName: 'Apollo', age: 14, bio: 'My bio');
+
+
+class A
+{
+
+    public function __construct($name, $age)
+    {
+        echo '<br>Hello ' . $name . ' You are ' . $age . ' years old.';
+    }
+}
+
+
+new A(age: 3, name: 'Adam');
