@@ -1,0 +1,10 @@
+/.vscode
+/.idea
+/.phpunit.cache
+/vendor/
+/garbage/
+.env
+*.config
+*.cache
+composer.phar
+phpunit.xml.bak
