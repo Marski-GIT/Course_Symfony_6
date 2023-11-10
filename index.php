@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Match
+
 /*
 $name = 'Adam';
 
@@ -36,6 +38,8 @@ $message = match ($name) {
 echo $message;
 */
 
+// Argument names
+
 /*
 function person($name, $lastName, $age, $address = null, $bio = null): void
 {
@@ -49,7 +53,6 @@ function person($name, $lastName, $age, $address = null, $bio = null): void
 
 person(name: 'Robert', lastName: 'Apollo', age: 14, bio: 'My bio');
 
-
 class A
 {
 
@@ -59,9 +62,11 @@ class A
     }
 }
 
-
 new A(age: 3, name: 'Adam');
+
 */
+
+// Constructor Property Promotion
 
 /*
 class User
@@ -75,7 +80,6 @@ class User
         $this->age = $age;
     }
 }
-*/
 
 class User
 {
@@ -84,7 +88,35 @@ class User
     }
 }
 
-
 $user = new User('John', 45);
 
 echo $user->name . ' ' . $user->age;
+*/
+
+// Null Safe Operator
+
+class Address
+{
+    public function country(): string
+    {
+        return 'USA';
+    }
+}
+
+
+class User
+{
+    public function __construct(public string $name, public int $age)
+    {
+    }
+
+    public function address()
+    {
+        //       return new Address();
+        return null;
+    }
+}
+
+$user = new User('John', 45);
+
+echo $user?->name . ' ' . $user?->age . ' ' . ($user?->address()?->country() ?? 'homeless');
