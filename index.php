@@ -4,9 +4,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+/*
 $name = 'Adam';
 
-/*
 switch ($name) {
     case 'Robert':
         $message = 'Hello Robert';
@@ -36,7 +36,7 @@ $message = match ($name) {
 echo $message;
 */
 
-
+/*
 function person($name, $lastName, $age, $address = null, $bio = null): void
 {
     echo 'Hello ' . $name . ' ' . $lastName . '. You are ' . $age . ' years old.';
@@ -61,3 +61,30 @@ class A
 
 
 new A(age: 3, name: 'Adam');
+*/
+
+/*
+class User
+{
+    public $name;
+    public $age;
+
+    public function __construct($name, $age)
+    {
+        $this->name = $name;
+        $this->age = $age;
+    }
+}
+*/
+
+class User
+{
+    public function __construct(public string $name, public int $age)
+    {
+    }
+}
+
+
+$user = new User('John', 45);
+
+echo $user->name . ' ' . $user->age;
