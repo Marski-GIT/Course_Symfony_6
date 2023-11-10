@@ -95,6 +95,7 @@ echo $user->name . ' ' . $user->age;
 
 // Null Safe Operator
 
+/*
 class Address
 {
     public function country(): string
@@ -102,7 +103,6 @@ class Address
         return 'USA';
     }
 }
-
 
 class User
 {
@@ -120,3 +120,22 @@ class User
 $user = new User('John', 45);
 
 echo $user?->name . ' ' . $user?->age . ' ' . ($user?->address()?->country() ?? 'homeless');
+*/
+
+// Union Types
+
+class User
+{
+    public function __construct(public string $name, public int $age)
+    {
+    }
+
+    public function foo(string|array|int $arg): array|int|string
+    {
+        return $arg;
+    }
+}
+
+$user = new User('John', 45);
+
+print_r($user->foo([1, 2, 3]));
