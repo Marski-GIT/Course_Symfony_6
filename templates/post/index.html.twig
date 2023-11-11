@@ -15,12 +15,15 @@
 </head>
 <body class="font-sans antialiased">
 
-<section class="container mx-auto p-40">
+{# container for all #}
+<section class="container mx-auto p-10">
+
     {# heder #}
     <header class="flex justify-between items-center">
+
         {# logo, search #}
         <div class="flex items-center">
-            <svg class="h-20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="202px" height="223.666px" viewBox="0 0 202 223.666" enable-background="new 0 0 202 223.666" xml:space="preserve"><g id="fond">
+            <svg class="max-h-28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="202px" height="223.666px" viewBox="0 0 202 223.666" enable-background="new 0 0 202 223.666" xml:space="preserve"><g id="fond">
                 </g>
                 <g id="compacte">
                 </g>
@@ -55,23 +58,42 @@
                 search bar
             </div>
         </div>
+
         {# links #}
-        <div class="hidden md:flex space-x-6 text-lg">
+        <nav class="hidden md:flex space-x-6 text-lg">
             <p>
                 Logged as:
                 <a href="#">John Smith</a>
             </p>
-            <p>
-                <a href="{{ path('posts.new') }}">New blog post</a>
-            </p>
-            <p>
-                <a href="/">Login</a>
-            </p>
-            <p>
-                <a href="/">Register</a>
-            </p>
+
+            <a href="{{ path('posts.new') }}">New blog post</a>
+            <a href="/">Login</a>
+            <a href="/">Register</a>
+        </nav>
+
+        {# hamburger icon #}
+        <div id="hamburger-icon" class="space-y-2 cursor-pointer md:hidden">
+            <div class="w-8 h-0.5 bg-gray-600"></div>
+            <div class="w-8 h-0.5 bg-gray-600"></div>
+            <div class="w-8 h-0.5 bg-gray-600"></div>
         </div>
     </header>
+
+    {# mobile menu #}
+    <nav class="md:hidden">
+        <div id="mobile-menu" class="flex-col items-center hidden py-8 mt-10 space-y-6 bg-white left-6 right-6 drop-shadow-lg">
+            <p> logged as: <a href="/" class="hover:text-stone-500">John Doe</a></p>
+
+            <form method="POST" action="/">
+                <button type="submit" class="tracking-wider hover:text-stone-500">Logout</button>
+            </form>
+
+            <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">New blog post</a>
+            <a href="/" class=" tracking-widest hover:text-stone-500">Login</a>
+            <a href="/" class=" tracking-widest hover:text-stone-500">Register</a>
+        </div>
+    </nav>
+
 </section>
 
 </body>
