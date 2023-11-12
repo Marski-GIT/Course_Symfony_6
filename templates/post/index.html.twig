@@ -79,12 +79,14 @@
         <nav class="hidden md:flex space-x-6 text-lg">
             <p>
                 Logged as:
-                <a href="#">John Smith</a>
+                <a href="/" class="hover:text-stone-500">John Smith</a>
             </p>
-
-            <a href="{{ path('posts.new') }}">New blog post</a>
-            <a href="/">Login</a>
-            <a href="/">Register</a>
+            <form action="/" method="POST">
+                <button type="submit" class="tracking-widest hover:text-stone-500">Logout</button>
+            </form>
+            <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">New blog post</a>
+            <a href="/" class="tracking-widest hover:text-stone-500">Login</a>
+            <a href="/" class="tracking-widest hover:text-stone-500">Register</a>
         </nav>
 
         {# hamburger icon #}
