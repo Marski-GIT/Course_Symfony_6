@@ -12,6 +12,10 @@
             <p class="text-gray-500 mt-10 leading-8">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+            <div class="flex  items-center mt-10">
+                You follow:&nbsp;<a href="{{ path('posts.user', {id:1}) }}" class="text-green-500 hover:text-green-700">John Smith</a>
+                <a href="{{ path('toggleFollow', {user:1}) }}" class="ml-3 inline font-bold text-sm px-6 py-2 text-white rounded bg-blue-500 hover:bg-blue-600"> Follow the post author</a>
+            </div>
         </div>
     </article>
 {% endblock %}
