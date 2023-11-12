@@ -101,7 +101,7 @@
     {# mobile menu #}
     <nav class="md:hidden">
         <div id="mobile-menu" class="flex-col items-center hidden py-8 mt-10 space-y-6 bg-white left-6 right-6 drop-shadow-lg">
-            <p> logged as: <a href="/" class="hover:text-stone-500">John Doe</a></p>
+            <p> Logged as: <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">John Smith</a></p>
 
             <form method="POST" action="/">
                 <button type="submit" class="tracking-wider hover:text-stone-500">Logout</button>
