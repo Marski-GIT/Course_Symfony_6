@@ -3,24 +3,24 @@
 {% block body %}
     <section class="py-12 mt-10">
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2">
                 <div class="max-w-xl ">
                     {{ include('post/_update_profile_information_form.html.twig') }}
                 </div>
             </div>
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2">
                 <div class="max-w-xl ">
                     {{ include('post/_update-profile-image-form.html.twig') }}
                 </div>
             </div>
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2">
                 <div class="max-w-xl ">
                     {{ include('post/_update-profile-password-form.html.twig') }}
                 </div>
             </div>
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2">
                 <div class="max-w-xl ">
-                    delete-user-form
+                    {{ include('post/_delete-user-form.html.twig') }}
                 </div>
             </div>
         </div>

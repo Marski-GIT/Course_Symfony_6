@@ -16,7 +16,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/profile', name: 'app_profile')]
+    #[Route('/dashboard/profile', name: 'app_profile')]
     public function profile(): Response
     {
         return $this->render('dashboard/edit.html.twig', [
