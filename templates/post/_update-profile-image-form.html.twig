@@ -1,0 +1,19 @@
+<section>
+    <header class="mb-6">
+        <h2 class="text-lg font-medium text-gray-900">Profile Image</h2>
+        <p class="mt-1 text-sm text-gray-600">Update your profile image</p>
+    </header>
+
+    <img class="ml-2 object-scale-down h-24 w-24 rounded-full inline" src="http://localhost:8000/images/test_image.jpg" alt="profile image">
+
+    <form action="{{ path('app_profile') }}" method="POST" class="mt-6 space-y-6" enctype="multipart/form-data">
+        <fieldset>
+            <label for="image" class="block mb-4">Choose File</label>
+            <input type="file" name="image" id="image" class="block w-full text-sm text-gray-500 file:mr-4 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100">
+            <span class="text-red-600 text-sm">message</span>
+        </fieldset>
+        <fieldset class="flex items-center gap-4">
+            <p class="text-sm text-gray-600">Saved</p>
+        </fieldset>
+    </form>
+</section>
