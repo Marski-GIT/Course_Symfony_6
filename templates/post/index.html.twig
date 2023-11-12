@@ -29,7 +29,7 @@
 
         {# logo, search #}
         <div class="flex items-center">
-            <svg class="max-h-28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="202px" height="223.666px" viewBox="0 0 202 223.666" enable-background="new 0 0 202 223.666" xml:space="preserve"><g id="fond">
+            <svg class="max-h-28 m-0 w-auto" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="202px" height="223.666px" viewBox="0 0 202 223.666" enable-background="new 0 0 202 223.666" xml:space="preserve"><g id="fond">
                 </g>
                 <g id="compacte">
                 </g>
@@ -57,11 +57,21 @@
                 </g>
                 </svg>
 
-            <div class="text-3xl hidden md:block">
+            <div class="text-3xl hidden md:block tracking-tight text-gray-600 font-medium ml-2">
                 <a href="#">SymfonyMicroBlog</a>
             </div>
-            <div>
-                search bar
+            <div class="ml-4">
+                <label for="search">
+                    <input id="search" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border-slate-300 rounded-md py-2 pl-9 pr-3 sm:text-sm" placeholder="Search for posts ..." type="text" name="search">
+                </label>
+                <ul class="bg-white border border-gray-100 mt-2 absolute">
+                    <li class="pl-8 pr-2 py-1 border-b-2 border-gray-100 relative hover:bg-yellow-50 hover:text-gray-900">
+                        <a href="{{ path('posts.show', {id:1}) }}">Post title</a>
+                    </li>
+                    <li class="pl-8 pr-2 py-1 border-b-2 border-gray-100 relative hover:bg-yellow-50 hover:text-gray-900">
+                        <a href="{{ path('posts.show', {id:1}) }}">Post title</a>
+                    </li>
+                </ul>
             </div>
         </div>
 
