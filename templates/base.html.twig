@@ -66,7 +66,7 @@
             {{ include('_logout_form.html.twig') }}
 
             <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">{% trans %}New blog post{% endtrans %}</a>
-            <a href="/" class="tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
+            <a href="{{ path('app_login') }}" class="tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
             <a href="{{ path('app_register') }}" class="tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
         </nav>
 
@@ -89,7 +89,7 @@
             {{ include('_logout_form.html.twig') }}
 
             <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">New blog post</a>
-            <a href="/" class=" tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
+            <a href="{{ path('app_login') }}" class=" tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
             <a href="{{ path('app_register') }}" class=" tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
         </div>
     </nav>
