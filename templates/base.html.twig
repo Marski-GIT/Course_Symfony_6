@@ -39,7 +39,7 @@
             {{ include('svgIcons/symfony_logo.html.twig') }}
 
             <div class="text-3xl hidden md:block tracking-tight text-gray-600 font-medium ml-2">
-                <a href="{{ path('posts.index') }}">SymfonyMicroBlog</a>
+                <h1><a href="{{ path('posts.index') }}">SymfonyMicroBlog</a></h1>
             </div>
             <div class="ml-4">
                 <label for="search">
@@ -59,15 +59,15 @@
         {# links #}
         <nav class="hidden md:flex space-x-6 text-lg">
             <p>
-                Logged as:
-                <a href="/dashboard" class="hover:text-stone-500">John Smith</a>
+                {% trans %}Logged as{% endtrans %}:
+                <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">John Smith</a>
             </p>
 
             {{ include('_logout_form.html.twig') }}
 
             <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">{% trans %}New blog post{% endtrans %}</a>
-            <a href="/" class="tracking-widest hover:text-stone-500">Login</a>
-            <a href="/" class="tracking-widest hover:text-stone-500">Register</a>
+            <a href="/" class="tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
+            <a href="{{ path('app_register') }}" class="tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
         </nav>
 
         {# hamburger icon #}
@@ -81,13 +81,16 @@
     {# mobile menu #}
     <nav class="md:hidden">
         <div id="mobile-menu" class="flex-col items-center hidden py-8 mt-10 space-y-6 bg-white left-6 right-6 drop-shadow-lg">
-            <p> Logged as: <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">John Smith</a></p>
+            <p>
+                {% trans %}Logged as{% endtrans %}:
+                <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">John Smith</a>
+            </p>
 
             {{ include('_logout_form.html.twig') }}
 
             <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">New blog post</a>
-            <a href="/" class=" tracking-widest hover:text-stone-500">Login</a>
-            <a href="/" class=" tracking-widest hover:text-stone-500">Register</a>
+            <a href="/" class=" tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
+            <a href="{{ path('app_register') }}" class=" tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
         </div>
     </nav>
 
