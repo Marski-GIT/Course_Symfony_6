@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,5 +22,14 @@ class LoginController extends AbstractController
             'last_username'   => $lastUserName,
             'error'           => $error
         ]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    #[Route('/{_locale}/logout', name: 'app_logout')]
+    public function logout()
+    {
+        throw new Exception("Don't forget to active logout in security.yaml");
     }
 }

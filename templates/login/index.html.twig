@@ -23,6 +23,7 @@
 
                 {# If you want tp control the URL the user is redirected to on succes <input type="hidden" name="_target_path" value="/account"> #}
 
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <button type="submit" class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg w-1/6 font-extrabold py-4 px-4 rounded-3xl">{% trans %}Login{% endtrans %}</button>
             </form>
         </div>
