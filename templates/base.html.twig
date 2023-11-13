@@ -35,11 +35,11 @@
 
         {# logo, search #}
         <div class="flex items-center">
-            
+
             {{ include('svgIcons/symfony_logo.html.twig') }}
 
             <div class="text-3xl hidden md:block tracking-tight text-gray-600 font-medium ml-2">
-                <a href="/">SymfonyMicroBlog</a>
+                <a href="{{ path('posts.index') }}">SymfonyMicroBlog</a>
             </div>
             <div class="ml-4">
                 <label for="search">
