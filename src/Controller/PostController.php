@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
-    #[Route('/', name: 'posts.index', methods: ['GET'])]
+    #[Route('/{_locale?}', name: 'posts.index', methods: ['GET'])]
     public function index(): Response
     {
         return $this->render('post/index.html.twig');
@@ -20,7 +20,7 @@ class PostController extends AbstractController
         return $this->render('post/new.html.twig');
     }
 
-    #[Route('/post/show/{id}', name: 'posts.show', methods: ['GET'])]
+    #[Route('/post/{id}/{_locale?}', name: 'posts.show', methods: ['GET'])]
     public function show($id): Response
     {
         return $this->render('post/show.html.twig');

@@ -30,7 +30,7 @@
                     You follow:&nbsp;<a href="{{ path('posts.user', {id:1}) }}" class="text-green-500 hover:text-green-700">John Smith</a>
                 </div>
                 <div>
-                    <a href="{{ path('toggleFollow', {user:1}) }}" class="ml-3 inline font-bold text-sm px-6 py-2 text-white rounded bg-blue-500 hover:bg-blue-600"> Follow the post author</a>
+                    <a href="{{ path('toggleFollow', {user:1}) }}" class="ml-3 inline font-bold text-sm px-6 py-2 text-white rounded bg-blue-500 hover:bg-blue-600">{% trans %}Follow the post author{% endtrans %}</a>
                 </div>
             </div>
         </div>
