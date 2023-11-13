@@ -12,6 +12,8 @@ class DashboardController extends AbstractController
     #[Route('/{_locale}/dashboard', name: 'app_dashboard')]
     public function index(string $_locale = 'en'): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
         ]);
@@ -20,6 +22,8 @@ class DashboardController extends AbstractController
     #[Route('/{_locale}/dashboard/profile', name: 'app_profile')]
     public function profile(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return $this->render('dashboard/edit.html.twig', [
             'controller_name' => 'DashboardController',
         ]);

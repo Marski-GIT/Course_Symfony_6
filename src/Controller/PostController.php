@@ -18,6 +18,8 @@ class PostController extends AbstractController
     #[Route('/{_locale}/post/new', name: 'posts.new', methods: ['GET', 'POST'])]
     public function new(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return $this->render('post/new.html.twig');
     }
 
@@ -30,6 +32,8 @@ class PostController extends AbstractController
     #[Route('/{_locale}/post/{id}/edit', name: 'posts.edit', methods: ['GET', 'POST'])]
     public function edit($id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         // return $this->redirectToRoute('posts.index');
         return $this->render('post/edit.html.twig');
     }
@@ -37,6 +41,8 @@ class PostController extends AbstractController
     #[Route('/{_locale}/post/{id}/delete', name: 'posts.delete', methods: ['POST'])]
     public function delete($id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return new Response('delete post from the database');
     }
 
@@ -49,6 +55,8 @@ class PostController extends AbstractController
     #[Route('/{_locale}/toggleFollow/{user}', name: 'toggleFollow', methods: ['GET'])]
     public function toggleFollow($user): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return new Response('logic for toggling like/dislike');
     }
 }
