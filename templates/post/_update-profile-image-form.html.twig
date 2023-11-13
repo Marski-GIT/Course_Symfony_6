@@ -12,8 +12,13 @@
             <input type="file" name="image" id="image" class="block w-full text-sm text-gray-500 file:mr-4 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100">
             <span class="text-red-600 text-sm">message</span>
         </fieldset>
-        <fieldset class="flex items-center gap-4">
-            <p class="text-sm text-gray-600">Saved</p>
+        <fieldset class="flex items-center gap-4 h-3">
+            <p class="text-sm text-gray-600"
+               x-data="{show: true}"
+               x-show="show"
+               x-transition
+               x-init="setTimeout(() => show = false,2000)"
+            >Saved</p>
         </fieldset>
     </form>
 </section>
