@@ -58,16 +58,22 @@
 
         {# links #}
         <nav class="hidden md:flex space-x-6 text-lg">
-            <p>
-                {% trans %}Logged as{% endtrans %}:
-                <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">John Smith</a>
-            </p>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <p>
+                    {% trans %}Logged as{% endtrans %}:
+                    <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">{{ app.user.email }}</a>
+                </p>
 
-            {{ include('_logout_form.html.twig') }}
+                {{ include('_logout_form.html.twig') }}
 
-            <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">{% trans %}New blog post{% endtrans %}</a>
-            <a href="{{ path('app_login') }}" class="tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
-            <a href="{{ path('app_register') }}" class="tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
+                <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">{% trans %}New blog post{% endtrans %}</a>
+
+            {% else %}
+
+                <a href="{{ path('app_login') }}" class="tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
+                <a href="{{ path('app_register') }}" class="tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
+
+            {% endif %}
         </nav>
 
         {# hamburger icon #}
@@ -81,16 +87,23 @@
     {# mobile menu #}
     <nav class="md:hidden">
         <div id="mobile-menu" class="flex-col items-center hidden py-8 mt-10 space-y-6 bg-white left-6 right-6 drop-shadow-lg">
-            <p>
-                {% trans %}Logged as{% endtrans %}:
-                <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">John Smith</a>
-            </p>
 
-            {{ include('_logout_form.html.twig') }}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <p>
+                    {% trans %}Logged as{% endtrans %}:
+                    <a href="{{ path('app_dashboard') }}" class="hover:text-stone-500">{{ app.user.email }}</a>
+                </p>
 
-            <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">New blog post</a>
-            <a href="{{ path('app_login') }}" class=" tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
-            <a href="{{ path('app_register') }}" class=" tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
+                {{ include('_logout_form.html.twig') }}
+
+                <a href="{{ path('posts.new') }}" class="inline font-bold text-sm px-6 py-2 text-white rounded-full bg-red-500 hover:bg-red-600">New blog post</a>
+
+            {% else %}
+
+                <a href="{{ path('app_login') }}" class=" tracking-widest hover:text-stone-500">{% trans %}Login{% endtrans %}</a>
+                <a href="{{ path('app_register') }}" class=" tracking-widest hover:text-stone-500">{% trans %}Register{% endtrans %}</a>
+
+            {% endif %}
         </div>
     </nav>
 
