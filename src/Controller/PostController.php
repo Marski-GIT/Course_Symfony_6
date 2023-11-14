@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Post;
+use App\Form\PostType;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class PostController extends AbstractController
@@ -20,7 +22,15 @@ class PostController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        return $this->render('post/new.html.twig');
+        $post = new Post();
+        $post->setTitle('Test');
+        $post->setContent('Post content');
+
+        $form = $this->createForm(PostType::class, $post);
+
+        return $this->render('post/new.html.twig', [
+            'form' => $form
+        ]);
     }
 
     #[Route('/{_locale}/post/{id}', name: 'posts.show', methods: ['GET'])]
