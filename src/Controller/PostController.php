@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Post;
+use App\Entity\{Post};
 use App\Form\PostType;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class PostController extends AbstractController
@@ -18,18 +20,25 @@ class PostController extends AbstractController
     }
 
     #[Route('/{_locale}/post/new', name: 'posts.new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $post = new Post();
+        $post->setTitle('Title post #1');
+        $post->setContent('POst Content.');
+        $post->setUser($this->getUser());
+        $post->setCreatedAt(new DateTimeImmutable('now'));
 
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $post = $form->getData();
+            // $post = $form->getData();
+
+            $entityManager->persist($post);
+            $entityManager->flush();
 
             return $this->redirectToRoute('posts.index');
         }
