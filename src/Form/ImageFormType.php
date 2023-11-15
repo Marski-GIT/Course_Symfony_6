@@ -27,7 +27,6 @@ class ImageFormType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image file: png,jpg,gif,svg.'
                     ])
                 ]
-
             ]);
     }
 
