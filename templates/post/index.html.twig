@@ -17,4 +17,9 @@
         {{ component('PostComponent', {post: post}) }}
 
     {% endfor %}
+
+    <aside class="my-16">
+        {{ knp_pagination_render(posts) }}
+    </aside>
+
 {% endblock %}

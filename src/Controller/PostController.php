@@ -15,9 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
 class PostController extends AbstractController
 {
     #[Route('/{_locale}', name: 'posts.index', methods: ['GET'])]
-    public function index(ManagerRegistry $doctrine, string $_locale = 'en'): Response
+    public function index(Request $request, ManagerRegistry $doctrine, string $_locale = 'en'): Response
     {
-        $posts = $doctrine->getRepository(Post::class)->findAll();
+        $posts = $doctrine->getRepository(Post::class)->findAllPosts($request->query->getInt('page', 1));
 
         return $this->render('post/index.html.twig', [
             'posts' => $posts
