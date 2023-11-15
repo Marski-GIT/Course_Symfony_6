@@ -7,17 +7,15 @@
             <a href="{{ path('posts.show',{id: post.id}) }}" class="text-red-500 hover:text-red-900">Read more</a>
         </p>
         <div class="flex">
-            {% if app.user is not null %}
-                {% if app.user.id == post.user.id %}
-                    <a href="{{ path('posts.edit',{id: post.id}) }}" title="Edit" class="mr-2 cursor-pointer">
-                        {{ include('svgIcons/edit_icon.html.twig') }}
-                    </a>
-                    <form action="{{ path('posts.delete',{id: post.id}) }}" method="POST">
-                        <button type="submit" onclick="return confirm('Are you sure ?')" title="Delete" class=" mr-2 cursor-pointer">
-                            {{ include('svgIcons/delete_icon.html.twig') }}
-                        </button>
-                    </form>
-                {% endif %}
+            {% if app.user and app.user.id == post.user.id %}
+                <a href="{{ path('posts.edit',{id: post.id}) }}" title="Edit" class="mr-2 cursor-pointer">
+                    {{ include('svgIcons/edit_icon.html.twig') }}
+                </a>
+                <form action="{{ path('posts.delete',{id: post.id}) }}" method="POST">
+                    <button type="submit" onclick="return confirm('Are you sure ?')" title="Delete" class=" mr-2 cursor-pointer">
+                        {{ include('svgIcons/delete_icon.html.twig') }}
+                    </button>
+                </form>
             {% endif %}
         </div>
     </div>
