@@ -4,20 +4,29 @@
         <p class="mt-1 text-sm text-gray-600">Are you sure want to delete your account?</p>
     </header>
 
-    <form action="{{ path('app_profile') }}" method="POST" class="mt-6 space-y-6">
-        <p class="mt-1 text-sm text-gray-600">Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm your would like to permanently delete your account.</p>
+    {{ form_start(deleteAccountForm, {'attr': {'class': 'mt-6 space-y-6'}}) }}
+    <p class="mt-1 text-sm text-gray-600">Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm your would like to permanently delete your account.</p>
 
-        <fieldset>
-            <label for="password" class="block mb-4">Password</label>
-            <input type="password" name="password" id="password" class="mt-1 block w-full p-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+    <fieldset>
+
+        {{ form_label(deleteAccountForm.currentPassword, 'Password', {'label_attr': {'class': 'block mb-4'}}) }}
+        {{ form_widget(deleteAccountForm.currentPassword, {'attr': {'class': 'mt-1 block w-full p-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'}}) }}
+
+        {% if deleteAccountForm.currentPassword.vars['errors']|length > 0 %}
             <ul class="mt-2 text-sm text-red-600 space-y-1">
-                <li>message</li>
+                {% for error in deleteAccountForm.currentPassword.vars['errors'] %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
             </ul>
-        </fieldset>
+        {% endif %}
 
-        <fieldset class="flex justify-end gap-4">
-            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 ">Cancel</button>
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-red-700 active:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete Account</button>
-        </fieldset>
-    </form>
+    </fieldset>
+
+    <fieldset class="flex justify-end gap-4">
+        
+        {{ form_widget(deleteAccountForm.cancel, {'attr': {'class': 'inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150'}}) }}
+        {{ form_widget(deleteAccountForm.save, {'attr': {'class': 'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-red-700 active:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150'}}) }}
+
+    </fieldset>
+    {{ form_end(deleteAccountForm) }}
 </section>

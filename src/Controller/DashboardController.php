@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Image;
-use App\Form\{ImageFormType, UserFormType, ChangePasswordFormType};
+use App\Form\{DeleteAccountFormType, ImageFormType, UserFormType, ChangePasswordFormType};
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class DashboardController extends AbstractController
@@ -33,10 +33,13 @@ class DashboardController extends AbstractController
 
         $passwordForm = $this->passwordForm($request);
 
+        $deleteAccountForm = $this->deleteAccountForm($request);
+
         return $this->render('dashboard/edit.html.twig', [
-            'imageForm'    => $imageForm,
-            'userForm'     => $userForm,
-            'passwordForm' => $passwordForm
+            'imageForm'         => $imageForm,
+            'userForm'          => $userForm,
+            'passwordForm'      => $passwordForm,
+            'deleteAccountForm' => $deleteAccountForm
         ]);
     }
 
@@ -86,5 +89,21 @@ class DashboardController extends AbstractController
         }
 
         return $passwordForm;
+    }
+
+    private function deleteAccountForm(Request $request): FormInterface
+    {
+        $user = $this->getUser();
+        $deleteAccountForm = $this->createForm(DeleteAccountFormType::class, $user);
+        $deleteAccountForm->handleRequest($request);
+
+        if ($deleteAccountForm->isSubmitted() && $deleteAccountForm->isValid()) {
+
+            $user = $deleteAccountForm->getData();
+
+            $this->redirectToRoute('app_profile');
+        }
+
+        return $deleteAccountForm;
     }
 }
