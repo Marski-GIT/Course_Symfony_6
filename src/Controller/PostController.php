@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Post;
 use App\Form\PostType;
@@ -18,15 +18,21 @@ class PostController extends AbstractController
     }
 
     #[Route('/{_locale}/post/new', name: 'posts.new', methods: ['GET', 'POST'])]
-    public function new(): Response
+    public function new(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $post = new Post();
-        $post->setTitle('Test');
-        $post->setContent('Post content');
 
         $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $post = $form->getData();
+
+            return $this->redirectToRoute('posts.index');
+        }
 
         return $this->render('post/new.html.twig', [
             'form' => $form
