@@ -24,11 +24,15 @@
 
         <button type="submit" class="px-4 py-2 text-sm text-white bg-indigo-600 rounded">Submit</button>
 
-        <p class="text-sm text-gray-600"
-           x-data="{show: true}"
-           x-show="show"
-           x-transition
-           x-init="setTimeout(() => show = false,2000)">Saved</p>
+        {% for message in app.flashes('status-images') %}
+            {% if message == 'image-updated' %}
+                <p class="text-sm text-gray-600"
+                   x-data="{show: true}"
+                   x-show="show"
+                   x-transition
+                   x-init="setTimeout(() => show = false,2000)">Saved</p>
+            {% endif %}
+        {% endfor %}
     </fieldset>
     {{ form_end(imageForm) }}
 </section>

@@ -53,6 +53,8 @@ class DashboardController extends AbstractController
 
             $image = $imageForm->getData();
 
+            $this->addFlash('status-image', 'image-update');
+
             $this->redirectToRoute('app_profile');
         }
 
@@ -69,6 +71,8 @@ class DashboardController extends AbstractController
 
             $user = $userForm->getData();
 
+            $this->addFlash('status-profile-information', 'user-update');
+
             $this->redirectToRoute('app_profile');
         }
 
@@ -84,6 +88,8 @@ class DashboardController extends AbstractController
         if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
 
             $user = $passwordForm->getData();
+
+            $this->addFlash('status-password', 'password-changes');
 
             $this->redirectToRoute('app_profile');
         }
