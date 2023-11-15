@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use DateTimeImmutable;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,9 +15,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class PostController extends AbstractController
 {
     #[Route('/{_locale}', name: 'posts.index', methods: ['GET'])]
-    public function index(string $_locale = 'en'): Response
+    public function index(ManagerRegistry $doctrine, string $_locale = 'en'): Response
     {
-        return $this->render('post/index.html.twig');
+        $posts = $doctrine->getRepository(Post::class)->findAll();
+
+        return $this->render('post/index.html.twig', [
+            'posts' => $posts
+        ]);
     }
 
     #[Route('/{_locale}/post/new', name: 'posts.new', methods: ['GET', 'POST'])]
