@@ -3,36 +3,7 @@
 {% block title %}Show a post - Symfony Micro Blog{% endblock %}
 
 {% block body %}
-    <article class="my-14 flex flex-col">
-        <div class="text-center justify-around">
-            <p class="text-gray-500">18/08/2023</p>
-            <p class="italic text-sm">by Adam Smith
-                <img class="ml-2 object-scale-down h-14 w-14 rounded-full inline" src="http://localhost:8000/images/test_image.jpg" alt="profile image">
-            </p>
-            <h2 class="mb-10 text-6xl font-bold tracking-tighter mt-5">Post title</h2>
-            <hr>
-            <p class="text-gray-500 mt-10 leading-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
 
-            <div class="flex items-center justify-between mt-10">
-                <div class="flex mr-4">
-                    <a title="Undo like" class="cursor-pointer">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
-                    <a title="You disliked this" class="ml-2 mr-1">{{ component('LikeIconComponent', {class:'fill-green-300'}) }}</a>
-                    <span class="text-lg">(13)</span>
+    {{ component('PostDetailsComponent', {post: post}) }}.
 
-                    <a title="Undo dislike" class="ml-4 cursor-pointer">{{ component('UnlikeIconComponent', {class:'fill-red-500 hover:stroke-cyan-700 rotate-180'}) }}</a>
-                    <a title="You like this post" class="ml-2 mr-1">{{ component('UnlikeIconComponent', {class:'fill-red-300 rotate-180'}) }}</a>
-                    <span class="text-lg">(4)</span>
-
-                </div>
-                <div>
-                    You follow:&nbsp;<a href="{{ path('posts.user', {id:1}) }}" class="text-green-500 hover:text-green-700">John Smith</a>
-                </div>
-                <div>
-                    <a href="{{ path('toggleFollow', {user:1}) }}" class="ml-3 inline font-bold text-sm px-6 py-2 text-white rounded bg-blue-500 hover:bg-blue-600">{% trans %}Follow the post author{% endtrans %}</a>
-                </div>
-            </div>
-        </div>
-    </article>
 {% endblock %}

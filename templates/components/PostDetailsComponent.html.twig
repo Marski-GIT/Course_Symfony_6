@@ -1,0 +1,39 @@
+<article class="my-14 flex flex-col">
+    <div class="text-center justify-around">
+        <p class="text-gray-500">{{ post.createdAt|date('j M Y') }}</p>
+        <p class="italic text-sm">by {{ post.user.name }}
+            <img class="ml-2 object-scale-down h-14 w-14 rounded-full inline" src="http://localhost:8000/images/test_image.jpg" alt="profile image">
+        </p>
+        <h2 class="mb-10 text-6xl font-bold tracking-tighter mt-5">{{ post.title }}</h2>
+        <hr>
+        <p class="text-gray-500 mt-10 leading-8">{{ post.content }}</p>
+
+        <div class="mt-6 w-full">
+            <a href="{{ path('posts.index') }}" class=" inline font-bold border text-sm px-6 py-2 text-black rounded bg-white hover:bg-gray-100">{% trans %}Back{% endtrans %}</a>
+        </div>
+
+        <div class="flex items-center justify-between mt-10">
+            <div class="flex mr-4">
+                <a title="Undo like" class="cursor-pointer">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
+                <a title="You disliked this" class="ml-2 mr-1">{{ component('LikeIconComponent', {class:'fill-green-300'}) }}</a>
+                <span class="text-lg">(13)</span>
+
+                <a title="Undo dislike" class="ml-4 cursor-pointer">{{ component('UnlikeIconComponent', {class:'fill-red-500 hover:stroke-cyan-700 rotate-180'}) }}</a>
+                <a title="You like this post" class="ml-2 mr-1">{{ component('UnlikeIconComponent', {class:'fill-red-300 rotate-180'}) }}</a>
+                <span class="text-lg">(4)</span>
+
+            </div>
+            <div>
+                {% if app.user and app.user.id != post.user.id %}
+                You follow:&nbsp;
+                <a href="{{ path('posts.user', {id: post.user.id}) }}" class="text-green-500 hover:text-green-700">{{ post.user.name }}</a>
+            </div>
+            <div>
+                <a href="{{ path('toggleFollow', {user: post.user.id}) }}" class="ml-3 inline font-bold text-sm px-6 py-2 text-white rounded bg-blue-500 hover:bg-blue-600">{% trans %}Follow the post author{% endtrans %}</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+</article>
