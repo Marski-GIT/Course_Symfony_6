@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Image;
 use App\Form\{DeleteAccountFormType, ImageFormType, UserFormType, ChangePasswordFormType};
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class DashboardController extends AbstractController
@@ -23,11 +25,11 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/{_locale}/dashboard/profile', name: 'app_profile')]
-    public function profile(Request $request): Response
+    public function profile(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $imageForm = $this->imageForm($request);
+        $imageForm = $this->imageForm($request, $entityManager);
 
         $userForm = $this->userForm($request);
 
@@ -43,15 +45,27 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    private function imageForm(Request $request): FormInterface
+    private function imageForm(Request $request, $entityManager): FormInterface
     {
         $image = new Image();
         $imageForm = $this->createForm(ImageFormType::class, $image);
         $imageForm->handleRequest($request);
 
+        $user = $this->getUser();
+
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
 
-            $image = $imageForm->getData();
+            $image->setPath($imageForm->get('imageFile')->getData()->getClientOriginalName());
+
+            if ($user->getImage()) {
+                $oldImage = $entityManager->getRepository(Image::class)->find($user->getImage()->getId());
+                $entityManager->remove($oldImage);
+            }
+
+            $user->setImage($image);
+            $entityManager->persist($image);
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             $this->addFlash('status-image', 'image-update');
 
