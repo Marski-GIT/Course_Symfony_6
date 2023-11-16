@@ -18,12 +18,12 @@ class Post
 
     #[ORM\Column(length: 255)]
     #[Asset\Type('string')]
-    #[Asset\Length(max: 20, maxMessage: 'Title too long.')]
+    #[Asset\Length(max: 255, maxMessage: 'Title too long.')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Asset\Type('string')]
-    #[Asset\Length(max: 1000, maxMessage: 'Content too long.')]
+    #[Asset\Length(max: 3000, maxMessage: 'Content too long.')]
     private ?string $content = null;
 
     #[ORM\Column]
