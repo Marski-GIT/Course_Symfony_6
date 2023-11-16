@@ -1,13 +1,13 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
-        <p class="mt-1 text-sm text-gray-600">Update your account's profile information adn email address.</p>
+        <h2 class="text-lg font-medium text-gray-900">{% trans %}Profile Information{% endtrans %}</h2>
+        <p class="mt-1 text-sm text-gray-600">{% trans %}Update your account's profile information adn email address{% endtrans %}.</p>
     </header>
 
     {{ form_start(userForm, {'attr': {'class': 'mt-6 space-y-6'}}) }}
     {% do userForm.password.setRendered %}
     <fieldset>
-        {{ form_label(userForm.name, 'Name', {'label_attr': {'class': 'block mb-4'}}) }}
+        {{ form_label(userForm.name, 'Name'|trans, {'label_attr': {'class': 'block mb-4'}}) }}
         {{ form_widget(userForm.name, {'attr': {'class': 'mt-1 block w-full p-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'}}) }}
 
         {% if userForm.name.vars['errors']|length > 0 %}
@@ -39,7 +39,7 @@
                    x-data="{show: true}"
                    x-show="show"
                    x-transition
-                   x-init="setTimeout(() => show = false,2000)">Saved</p>
+                   x-init="setTimeout(() => show = false,2000)">{% trans %}Saved{% endtrans %}</p>
             {% endif %}
         {% endfor %}
     </fieldset>

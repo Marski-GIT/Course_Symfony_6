@@ -9,7 +9,7 @@
             <h2 class="text-6xl pt-12 pb-8">{% trans %}Registration{% endtrans %}</h2>
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.email, {'attr': {'class': 'border rounded-md p-1'}}) }}
-            {{ form_row(registrationForm.plainPassword, {label: 'Password', 'attr': {'class': 'border rounded-md p-1'}}) }}
+            {{ form_row(registrationForm.plainPassword, {label: 'Password'|trans, 'attr': {'class': 'border rounded-md p-1'}}) }}
             {{ form_row(registrationForm.agreeTerms) }}
 
             <button type="submit" class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg w-1/6 font-extrabold py-4 px-4 rounded-3xl">{% trans %}Register{% endtrans %}</button>

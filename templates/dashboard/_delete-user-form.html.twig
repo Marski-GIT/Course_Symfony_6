@@ -1,7 +1,7 @@
 <section>
     <header class="mb-6">
-        <h2 class="text-lg font-medium text-gray-900">Delete Account</h2>
-        <p class="mt-1 text-sm text-gray-600">Are you sure want to delete your account?</p>
+        <h2 class="text-lg font-medium text-gray-900">{% trans %}Delete Account{% endtrans %}</h2>
+        <p class="mt-1 text-sm text-gray-600">{% trans %}Are you sure want to delete your account{% endtrans %}?</p>
     </header>
 
     {{ form_start(deleteAccountForm, {'attr': {'class': 'mt-6 space-y-6'}}) }}
@@ -9,7 +9,7 @@
 
     <fieldset>
 
-        {{ form_label(deleteAccountForm.currentPassword, 'Password', {'label_attr': {'class': 'block mb-4'}}) }}
+        {{ form_label(deleteAccountForm.currentPassword, 'Password'|trans, {'label_attr': {'class': 'block mb-4'}}) }}
         {{ form_widget(deleteAccountForm.currentPassword, {'attr': {'class': 'mt-1 block w-full p-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'}}) }}
 
         {% if deleteAccountForm.currentPassword.vars['errors']|length > 0 %}
@@ -23,7 +23,7 @@
     </fieldset>
 
     <fieldset class="flex justify-end gap-4">
-        
+
         {{ form_widget(deleteAccountForm.cancel, {'attr': {'class': 'inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150'}}) }}
         {{ form_widget(deleteAccountForm.save, {'attr': {'class': 'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-red-700 active:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150'}}) }}
 

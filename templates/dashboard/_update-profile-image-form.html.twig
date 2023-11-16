@@ -1,7 +1,7 @@
 <section>
     <header class="mb-6">
-        <h2 class="text-lg font-medium text-gray-900">Profile Image</h2>
-        <p class="mt-1 text-sm text-gray-600">Update your profile image</p>
+        <h2 class="text-lg font-medium text-gray-900">{% trans %}Profile Image{% endtrans %}</h2>
+        <p class="mt-1 text-sm text-gray-600">{% trans %}Update your profile image{% endtrans %}</p>
     </header>
 
     <img class="ml-2 object-scale-down h-24 w-24 rounded-full inline" src="http://localhost:8000/images/test_image.jpg" alt="profile image">
@@ -22,7 +22,7 @@
     </fieldset>
     <fieldset class="flex items-center gap-4 h-3">
 
-        <button type="submit" class="px-4 py-2 text-sm text-white bg-indigo-600 rounded">Submit</button>
+        <button type="submit" class="px-4 py-2 text-sm text-white bg-indigo-600 rounded">{% trans %}Submit{% endtrans %}</button>
 
         {% for message in app.flashes('status-images') %}
             {% if message == 'image-updated' %}
@@ -30,7 +30,7 @@
                    x-data="{show: true}"
                    x-show="show"
                    x-transition
-                   x-init="setTimeout(() => show = false,2000)">Saved</p>
+                   x-init="setTimeout(() => show = false,2000)">{% trans %}Saved{% endtrans %}</p>
             {% endif %}
         {% endfor %}
     </fieldset>

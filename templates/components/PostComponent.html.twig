@@ -4,7 +4,7 @@
         <h2 class="text-3xl font-bold tracking-widest">{{ post.title }}</h2>
         <p class="text-gray-500">{{ post.content|slice(0,500) ~ '...' }}</p>
         <p>
-            <a href="{{ path('posts.show',{id: post.id}) }}" class="text-red-500 hover:text-red-900">Read more</a>
+            <a href="{{ path('posts.show',{id: post.id}) }}" class="text-red-500 hover:text-red-900">{% trans %}Read more{% endtrans %}</a>
         </p>
         <div class="flex">
             {% if app.user and app.user.id == post.user.id %}

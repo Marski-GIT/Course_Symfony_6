@@ -6,3 +6,32 @@ Registration: Rejestracja
 Register: Zapisz się
 Login: Zaloguj się
 Logged as: Zalogowany
+Latest posts: Ostatnie posty
+A blog created with Symfony and Tailwind CSS: Blog stworzony przy użyciu Symfony i Tailwind CSS
+Read more: Czytaj dalej
+You're logged in: Jesteś zalogowany
+Profile: Profil
+Followers: Obserwujący
+Following: Obserwowani
+Liked Posts: Lubiane posty
+People that follow you: Ludzie, którzy cię śledzą
+People that you follow: Osoby, które obserwujesz
+Posts you liked: Posty, które polubiłeś
+Delete Account: Usuń konto
+Are you sure want to delete your account: Czy na pewno chcesz usunąć swoje konto
+Profile Image: Obraz profilu
+Update your profile image: Aktualizacja zdjęcia profilowego
+Update password: Zaktualizuj hasło
+Submit: Prześlij
+Ensure your account is using a long, random password to stay secure: Upewnij się, że Twoje konto używa długiego, losowego hasła, aby zachować bezpieczeństwo.
+Profile Information: Informacje o profilu
+Update your account's profile information adn email address: Zaktualizuj informacje o profilu konta i adres e-mail
+Name: Imię
+Password: Hasło
+Saved: Zapisano
+Current password: Aktualne hasło
+New password: Nowe hasło
+Repeat password: Powtórz hasło
+Post title: Tytuł postu
+Post content: Treść postu
+Edit blog post: Edytuj post
