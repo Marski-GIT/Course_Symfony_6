@@ -115,13 +115,14 @@ class DashboardController extends AbstractController
 
     private function passwordForm(): FormInterface
     {
-        $user = $this->getUser();
+
         $passwordForm = $this->createForm(ChangePasswordFormType::class, $this->userProfile);
         $passwordForm->handleRequest($this->request);
 
         if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
 
-            $user = $passwordForm->getData();
+            $this->entityManager->persist($this->userProfile);
+            $this->entityManager->flush();
 
             $this->addFlash('status-password', 'password-changes');
 
