@@ -41,8 +41,6 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // $post = $form->getData();
-
             $entityManager->persist($post);
             $entityManager->flush();
 
@@ -101,8 +99,7 @@ class PostController extends AbstractController
     #[Route('/{_locale}/posts/user/{id}', name: 'posts.user', methods: ['GET'])]
     public function user(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
-        $posts = $doctrine->getRepository(Post::class)
-            ->findAllUserPosts($request->query->getInt('page', 1), $id);
+        $posts = $doctrine->getRepository(Post::class)->findAllUserPosts($request->query->getInt('page', 1), $id);
 
         return $this->render('post/index.html.twig', [
             'posts' => $posts

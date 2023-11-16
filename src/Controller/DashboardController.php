@@ -11,7 +11,9 @@ use App\Form\{DeleteAccountFormType, ImageFormType, UserFormType, ChangePassword
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+//use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Services\ImageUploader;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class DashboardController extends AbstractController
@@ -19,6 +21,7 @@ class DashboardController extends AbstractController
     private EntityManagerInterface $entityManager;
     private Request $request;
     private null|UserInterface $userProfile;
+    private ImageUploader $imageUploader;
 
     #[Route('/{_locale}/dashboard', name: 'app_dashboard')]
     public function index(string $_locale = 'en'): Response
@@ -31,12 +34,13 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/{_locale}/dashboard/profile', name: 'app_profile')]
-    public function profile(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    public function profile(Request $request, EntityManagerInterface $entityManager, Security $security, ImageUploader $imageUploader): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $this->request = $request;
         $this->entityManager = $entityManager;
+        $this->imageUploader = $imageUploader;
         $this->userProfile = $this->getUser();
 
         $imageForm = $this->imageForm();
@@ -73,43 +77,38 @@ class DashboardController extends AbstractController
         $imageForm = $this->createForm(ImageFormType::class, $image);
         $imageForm->handleRequest($this->request);
 
-
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
 
             $imageFile = $imageForm->get('imageFile')->getData();
             if ($imageFile) {
+
                 if ($this->userProfile->getImage()?->getPath()) {
-                    unlink($this->getParameter('images_directory') . '/' . $this->userProfile->getImage()->getPath());
+
+                    $oldImage = $this->entityManager->getRepository(Image::class)->find($this->userProfile->getImage()->getId());
+
+                    $fileName = $this->getParameter('images_directory') . '/' . $this->userProfile->getImage()->getPath();
+
+                    if (file_exists($fileName)) {
+                        unlink($fileName);
+                    }
+
+                    $this->userProfile->setImage(null);
+                    $this->entityManager->remove($oldImage);
                 }
-            }
 
-            $newFileName = uniqid() . '.' . $imageFile->guessExtension();
+                $newFileName = $this->imageUploader->upload($imageFile);
 
-            try {
-                $imageFile->move($this->getParameter('images_directory'), $newFileName);
-            } catch (FileException $e) {
+                $image->setPath($newFileName);
 
-            }
-
-            $image->setPath($newFileName);
-
-            if ($this->userProfile->getImage()) {
-                $oldImage = $this->entityManager->getRepository(Image::class)->find($this->userProfile->getImage()->getId());
-
-                $this->userProfile->setImage(null);
-                $this->entityManager->remove($oldImage);
+                $this->userProfile->setImage($image);
+                $this->entityManager->persist($image);
+                $this->entityManager->persist($this->userProfile);
                 $this->entityManager->flush();
 
+                $this->addFlash('status-image', 'image-update');
+
+                $this->redirectToRoute('app_profile');
             }
-
-            $this->userProfile->setImage($image);
-            $this->entityManager->persist($image);
-            $this->entityManager->persist($this->userProfile);
-            $this->entityManager->flush();
-
-            $this->addFlash('status-image', 'image-update');
-
-            $this->redirectToRoute('app_profile');
         }
 
         return $imageForm;
