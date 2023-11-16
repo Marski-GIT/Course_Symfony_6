@@ -23,8 +23,7 @@ class DeleteAccountFormType extends AbstractType
                     'autocomplete' => 'off'
                 ]
             ])
-            ->add('save', SubmitType::class, ['label' => 'Delete account'])
-            ->add('cancel', ButtonType::class, ['label' => 'Cancel']);
+            ->add('save', SubmitType::class, ['label' => 'Delete account']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

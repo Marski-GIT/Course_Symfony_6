@@ -3,17 +3,22 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\{Response, Request};
+use Symfony\Component\HttpFoundation\{RedirectResponse, Response, Request};
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Image;
 use App\Form\{DeleteAccountFormType, ImageFormType, UserFormType, ChangePasswordFormType};
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class DashboardController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+    private Request $request;
+    private null|UserInterface $userProfile;
+
     #[Route('/{_locale}/dashboard', name: 'app_dashboard')]
     public function index(string $_locale = 'en'): Response
     {
@@ -25,17 +30,33 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/{_locale}/dashboard/profile', name: 'app_profile')]
-    public function profile(Request $request, EntityManagerInterface $entityManager): Response
+    public function profile(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $imageForm = $this->imageForm($request, $entityManager);
+        $this->request = $request;
+        $this->entityManager = $entityManager;
+        $this->userProfile = $this->getUser();
 
-        $userForm = $this->userForm($request);
+        $imageForm = $this->imageForm();
 
-        $passwordForm = $this->passwordForm($request);
+        $userForm = $this->userForm();
 
-        $deleteAccountForm = $this->deleteAccountForm($request);
+        $passwordForm = $this->passwordForm();
+
+        $deleteAccountForm = $this->createForm(DeleteAccountFormType::class, $this->userProfile);
+        $deleteAccountForm->handleRequest($this->request);
+
+        if ($deleteAccountForm->isSubmitted() && $deleteAccountForm->isValid()) {
+
+            $security->logout(false);
+
+            $this->entityManager->remove($this->userProfile);
+            $this->entityManager->flush();
+            $this->request->getSession()->invalidate();
+
+            return $this->redirectToRoute('posts.index');
+        }
 
         return $this->render('dashboard/edit.html.twig', [
             'imageForm'         => $imageForm,
@@ -45,27 +66,26 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    private function imageForm(Request $request, $entityManager): FormInterface
+    private function imageForm(): FormInterface
     {
         $image = new Image();
         $imageForm = $this->createForm(ImageFormType::class, $image);
-        $imageForm->handleRequest($request);
+        $imageForm->handleRequest($this->request);
 
-        $user = $this->getUser();
 
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
 
             $image->setPath($imageForm->get('imageFile')->getData()->getClientOriginalName());
 
-            if ($user->getImage()) {
-                $oldImage = $entityManager->getRepository(Image::class)->find($user->getImage()->getId());
-                $entityManager->remove($oldImage);
+            if ($this->userProfile->getImage()) {
+                $oldImage = $this->entityManager->getRepository(Image::class)->find($this->userProfile->getImage()->getId());
+                $this->entityManager->remove($oldImage);
             }
 
-            $user->setImage($image);
-            $entityManager->persist($image);
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->userProfile->setImage($image);
+            $this->entityManager->persist($image);
+            $this->entityManager->persist($this->userProfile);
+            $this->entityManager->flush();
 
             $this->addFlash('status-image', 'image-update');
 
@@ -75,15 +95,15 @@ class DashboardController extends AbstractController
         return $imageForm;
     }
 
-    private function userForm(Request $request): FormInterface
+    private function userForm(): FormInterface
     {
-        $user = $this->getUser();
-        $userForm = $this->createForm(UserFormType::class, $user);
-        $userForm->handleRequest($request);
+        $userForm = $this->createForm(UserFormType::class, $this->userProfile);
+        $userForm->handleRequest($this->request);
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
 
-            $user = $userForm->getData();
+            $this->entityManager->persist($this->userProfile);
+            $this->entityManager->flush();
 
             $this->addFlash('status-profile-information', 'user-update');
 
@@ -93,11 +113,11 @@ class DashboardController extends AbstractController
         return $userForm;
     }
 
-    private function passwordForm(Request $request): FormInterface
+    private function passwordForm(): FormInterface
     {
         $user = $this->getUser();
-        $passwordForm = $this->createForm(ChangePasswordFormType::class, $user);
-        $passwordForm->handleRequest($request);
+        $passwordForm = $this->createForm(ChangePasswordFormType::class, $this->userProfile);
+        $passwordForm->handleRequest($this->request);
 
         if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
 
@@ -109,21 +129,5 @@ class DashboardController extends AbstractController
         }
 
         return $passwordForm;
-    }
-
-    private function deleteAccountForm(Request $request): FormInterface
-    {
-        $user = $this->getUser();
-        $deleteAccountForm = $this->createForm(DeleteAccountFormType::class, $user);
-        $deleteAccountForm->handleRequest($request);
-
-        if ($deleteAccountForm->isSubmitted() && $deleteAccountForm->isValid()) {
-
-            $user = $deleteAccountForm->getData();
-
-            $this->redirectToRoute('app_profile');
-        }
-
-        return $deleteAccountForm;
     }
 }
