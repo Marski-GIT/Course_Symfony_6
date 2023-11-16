@@ -99,9 +99,14 @@ class PostController extends AbstractController
     }
 
     #[Route('/{_locale}/posts/user/{id}', name: 'posts.user', methods: ['GET'])]
-    public function user($id): Response
+    public function user(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
-        return $this->render('post/index.html.twig');
+        $posts = $doctrine->getRepository(Post::class)
+            ->findAllUserPosts($request->query->getInt('page', 1), $id);
+
+        return $this->render('post/index.html.twig', [
+            'posts' => $posts
+        ]);
     }
 
     #[Route('/{_locale}/toggleFollow/{user}', name: 'toggleFollow', methods: ['GET'])]

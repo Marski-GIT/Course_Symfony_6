@@ -35,4 +35,17 @@ class PostRepository extends ServiceEntityRepository
         return $this->paginator->paginate($dbQuery, $page, 3);
     }
 
+    public function findAllUserPosts(int $page, int $userId): \Knp\Component\Pager\Pagination\PaginationInterface
+    {
+        $dbQuery = $this->createQueryBuilder('p')
+            ->leftJoin('p.user', 'u')
+            ->addSelect('u')
+            ->where('p.user = :id')
+            ->setParameter('id', $userId)
+            ->getQuery()
+            ->getResult();
+
+        return $this->paginator->paginate($dbQuery, $page, 3);
+    }
+
 }
