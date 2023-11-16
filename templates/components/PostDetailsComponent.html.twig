@@ -2,7 +2,7 @@
     <div class="text-center justify-around">
         <p class="text-gray-500">{{ post.createdAt|date('j M Y') }}</p>
         <p class="italic text-sm">by {{ post.user.name }}
-            <img class="ml-2 object-scale-down h-14 w-14 rounded-full inline" src="http://localhost:8000/images/test_image.jpg" alt="profile image">
+            <img class="ml-2 object-scale-down h-14 w-14 rounded-full inline" src="{{ asset('images/' ~ app.user.image.path ?? '') }}" alt="profile image">
         </p>
         <h2 class="mb-10 text-6xl font-bold tracking-tighter mt-5">{{ post.title }}</h2>
         <hr>

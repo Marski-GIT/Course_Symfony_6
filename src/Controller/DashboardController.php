@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\{RedirectResponse, Response, Request};
+use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Image;
@@ -11,6 +11,7 @@ use App\Form\{DeleteAccountFormType, ImageFormType, UserFormType, ChangePassword
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class DashboardController extends AbstractController
@@ -75,11 +76,30 @@ class DashboardController extends AbstractController
 
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
 
-            $image->setPath($imageForm->get('imageFile')->getData()->getClientOriginalName());
+            $imageFile = $imageForm->get('imageFile')->getData();
+            if ($imageFile) {
+                if ($this->userProfile->getImage()?->getPath()) {
+                    unlink($this->getParameter('images_directory') . '/' . $this->userProfile->getImage()->getPath());
+                }
+            }
+
+            $newFileName = uniqid() . '.' . $imageFile->guessExtension();
+
+            try {
+                $imageFile->move($this->getParameter('images_directory'), $newFileName);
+            } catch (FileException $e) {
+
+            }
+
+            $image->setPath($newFileName);
 
             if ($this->userProfile->getImage()) {
                 $oldImage = $this->entityManager->getRepository(Image::class)->find($this->userProfile->getImage()->getId());
+
+                $this->userProfile->setImage(null);
                 $this->entityManager->remove($oldImage);
+                $this->entityManager->flush();
+
             }
 
             $this->userProfile->setImage($image);
@@ -115,7 +135,6 @@ class DashboardController extends AbstractController
 
     private function passwordForm(): FormInterface
     {
-
         $passwordForm = $this->createForm(ChangePasswordFormType::class, $this->userProfile);
         $passwordForm->handleRequest($this->request);
 
