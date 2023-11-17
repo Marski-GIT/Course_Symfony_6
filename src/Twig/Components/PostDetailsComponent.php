@@ -8,5 +8,6 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent()]
 final class PostDetailsComponent
 {
+    public bool $isFollowing = false;
     public Post $post;
 }

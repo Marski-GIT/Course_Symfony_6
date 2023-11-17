@@ -23,14 +23,17 @@
                 <span class="text-lg">(4)</span>
 
             </div>
-            <div>
-                {% if app.user and app.user.id != post.user.id %}
-                You follow:&nbsp;
-                <a href="{{ path('posts.user', {id: post.user.id}) }}" class="text-green-500 hover:text-green-700">{{ post.user.name }}</a>
-            </div>
-            <div>
-                <a href="{{ path('toggleFollow', {user: post.user.id}) }}" class="ml-3 inline font-bold text-sm px-6 py-2 text-white rounded bg-blue-500 hover:bg-blue-600">{% trans %}Follow the post author{% endtrans %}</a>
-            </div>
+            {% if app.user and app.user.id != post.user.id %}
+                {% if isFollowing %}
+                    <div>
+                        You follow:&nbsp;
+                        <a href="{{ path('posts.user', {id: post.user.id}) }}" class="text-green-500 hover:text-green-700">{{ post.user.name }}</a>
+                    </div>
+                {% else %}
+                    <div>
+                        <a href="{{ path('toggleFollow', {user: post.user.id}) }}" class="ml-3 inline font-bold text-sm px-6 py-2 text-white rounded bg-blue-500 hover:bg-blue-600">{% trans %}Follow the post author{% endtrans %}</a>
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>

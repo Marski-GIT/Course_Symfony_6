@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\{Post};
+use App\Entity\{Post, User};
 use App\Form\PostFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -53,10 +53,14 @@ class PostController extends AbstractController
     }
 
     #[Route('/{_locale}/post/{id}', name: 'posts.show', methods: ['GET'])]
-    public function show(Post $post): Response
+    public function show(Post $post, EntityManagerInterface $entityManager): Response
     {
+
+        $isFollowing = $entityManager->getRepository(User::class)->isFollowing($this->getUser(), $post->getUser()) ?? false;
+
         return $this->render('post/show.html.twig', [
-            'post' => $post
+            'post'        => $post,
+            'isFollowing' => $isFollowing
         ]);
     }
 
