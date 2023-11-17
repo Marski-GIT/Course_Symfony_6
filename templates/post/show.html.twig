@@ -4,6 +4,6 @@
 
 {% block body %}
 
-    {{ component('PostDetailsComponent', {post: post, isFollowing: isFollowing}) }}.
+    {{ component('PostShowComponent', {post: post, isFollowing: isFollowing, isLiked: isLiked, isDisLiked: isDisLiked}) }}.
 
 {% endblock %}

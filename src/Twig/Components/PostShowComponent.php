@@ -6,8 +6,10 @@ use App\Entity\Post;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent()]
-final class PostDetailsComponent
+final class PostShowComponent
 {
-    public array $isFollowing;
     public Post $post;
+    public array $isFollowing;
+    public array $isLiked;
+    public array $isDisLiked;
 }
