@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\{SubmitType, TextareaType, TextTy
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PostType extends AbstractType
+class PostFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

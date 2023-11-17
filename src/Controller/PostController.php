@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\{Post};
-use App\Form\PostType;
+use App\Form\PostFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -36,7 +36,7 @@ class PostController extends AbstractController
         $post->setUser($this->getUser());
         $post->setCreatedAt(new DateTimeImmutable('now'));
 
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,7 +65,7 @@ class PostController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
