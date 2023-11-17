@@ -40,11 +40,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function isFollowing($authUser, $user): ?User
+    
+    public function isFollowing($authUser, $user): array
     {
         return $this->createQueryBuilder('u')
             ->select('u.id')
@@ -53,8 +50,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->innerJoin('u.following', 'following')
             ->setParameter('authUser', $authUser)
             ->setParameter('user', $user)
+            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
 //    /**

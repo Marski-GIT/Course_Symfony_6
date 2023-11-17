@@ -6,7 +6,7 @@
 
     {# latest posts #}
     <section class="my-16">
-        <h1 class="text-6xl tracking-widest font-bold mb-6">{% trans %}Latest posts{% endtrans %}: {{ posts[0].user.name ?? '' }}</h1>
+        <h1 class="text-6xl tracking-widest font-bold mb-6">{% trans %}Latest posts{% endtrans %}: {{ user ?? '' }}</h1>
         <p class="mb-8 text-gray-500">{% trans %}A blog created with Symfony and Tailwind CSS{% endtrans %}</p>
         <hr>
     </section>
