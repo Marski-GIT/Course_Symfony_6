@@ -30,6 +30,10 @@ class PostRepository extends ServiceEntityRepository
         $dbQuery = $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')
             ->addSelect('u')
+            ->leftJoin('p.usersThatLike', 'l')
+            ->addSelect('COUNT(l) AS HIDDEN likes')
+            ->orderBy('likes', 'DESC')
+            ->groupBy('p')
             ->getQuery()->getResult();
 
         return $this->paginator->paginate($dbQuery, $page, 3);
@@ -40,6 +44,10 @@ class PostRepository extends ServiceEntityRepository
         $dbQuery = $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')
             ->addSelect('u')
+            ->leftJoin('p.usersThatLike', 'l')
+            ->addSelect('COUNT(l) AS HIDDEN likes')
+            ->orderBy('likes', 'DESC')
+            ->groupBy('p')
             ->where('p.user = :id')
             ->setParameter('id', $userId)
             ->getQuery()
