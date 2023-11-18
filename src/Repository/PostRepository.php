@@ -84,4 +84,29 @@ class PostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function searchPosts(string $query)
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $searchTerms = $this->prepareQuery($query);
+
+        foreach ($searchTerms as $key => $term) {
+            $queryBuilder
+                ->orWhere('p.title LIKE :t_' . $key)
+                ->orWhere('p.content LIKE :t_' . $key)
+                ->setParameter('t_' . $key, '%' . trim($term) . '%');
+        }
+
+        return $queryBuilder
+            ->select('p.title', 'p.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function prepareQuery(string $query): array
+    {
+        $terms = array_unique(explode(' ', $query));
+
+        return array_filter($terms, fn($term) => 2 <= mb_strlen($term));
+    }
+
 }
