@@ -6,16 +6,22 @@ use App\Entity\Post;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\{LiveAction, LiveProp};
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 #[AsLiveComponent('LikeComponent')]
 final class LikeComponent
 {
     use DefaultActionTrait;
 
-    public $post;
+    private EntityManagerInterface $entityManager;
+    private Security $security;
 
     public $isLiked;
     public $isDisliked;
+
+    #[LiveProp(writable: true)]
+    public Post $post;
 
     #[LiveProp(writable: true)]
     public int $likes = 0;
@@ -23,28 +29,50 @@ final class LikeComponent
     #[LiveProp(writable: true)]
     public int $dislikes = 0;
 
-    #[LiveAction]
-    public function like()
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Security $security
+     */
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
-        $this->likes++;
+        $this->entityManager = $entityManager;
+        $this->security = $security;
     }
 
     #[LiveAction]
-    public function undoLike()
+    public function like(): void
     {
-        $this->likes--;
+        $this->post->addUsersThatLike($this->security->getUser());
+        $this->isLiked = true;
+        $this->entityManager->persist($this->post);
+        $this->entityManager->flush();
     }
 
     #[LiveAction]
-    public function dislike()
+    public function undoLike(): void
     {
-        $this->dislikes++;
+        $this->post->removeUsersThatLike($this->security->getUser());
+        $this->isLiked = false;
+        $this->entityManager->persist($this->post);
+        $this->entityManager->flush();
     }
 
     #[LiveAction]
-    public function undoDislike()
+    public function dislike(): void
     {
-        $this->dislikes--;
+        $this->post->addUsersThatDontLike($this->security->getUser());
+        $this->isDisliked = true;
+        $this->entityManager->persist($this->post);
+        $this->entityManager->flush();
+    }
+
+    #[LiveAction]
+    public function undoDislike(): void
+    {
+        $this->post->removeUsersThatDontLike($this->security->getUser());
+        $this->isDisliked = false;
+        $this->entityManager->persist($this->post);
+        $this->entityManager->flush();
     }
 
 }

@@ -125,7 +125,7 @@ class Post
         return $this->usersThatLike;
     }
 
-    public function addUsersThatLike(User $usersThatLike): static
+    public function addUsersThatLike(?User $usersThatLike): static
     {
         if (!$this->usersThatLike->contains($usersThatLike)) {
             $this->usersThatLike->add($usersThatLike);
@@ -135,9 +135,9 @@ class Post
         return $this;
     }
 
-    public function removeUsersThatLike(User $usersThatLike): static
+    public function removeUsersThatLike(?User $usersThatLike): static
     {
-        if ($this->usersThatLik->removeElement($usersThatLike)) {
+        if ($this->usersThatLike->removeElement($usersThatLike)) {
             $usersThatLike->removeLikedPost($this);
         }
 
@@ -152,7 +152,7 @@ class Post
         return $this->usersThatDontLike;
     }
 
-    public function addUsersThatDontLike(User $usersThatDontLike): static
+    public function addUsersThatDontLike(?User $usersThatDontLike): static
     {
         if (!$this->usersThatDontLike->contains($usersThatDontLike)) {
             $this->usersThatDontLike->add($usersThatDontLike);
@@ -162,7 +162,7 @@ class Post
         return $this;
     }
 
-    public function removeUsersThatDontLike(User $usersThatDontLike): static
+    public function removeUsersThatDontLike(?User $usersThatDontLike): static
     {
         if ($this->usersThatDontLike->removeElement($usersThatDontLike)) {
             $usersThatDontLike->removeDislikedPost($this);
