@@ -47,9 +47,11 @@
                     <div x-show="tab === 3">
                         <b>{% trans %}Posts you liked{% endtrans %}:</b>
                         <ul class="m-1">
-                            <li>
-                                <a href="{{ path('posts.show', {id:1}) }}" class="hover:text-stone-500">Liked post title</a>
-                            </li>
+                            {% for lpost in app.user.getLikedPosts() %}
+                                <li>
+                                    <a href="{{ path('posts.show', {id: lpost.id}) }}" class="hover:text-stone-500">{{ lpost.title }}</a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
