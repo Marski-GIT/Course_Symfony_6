@@ -70,7 +70,7 @@ class PostController extends AbstractController
     #[Route('/{_locale}/post/{id}/edit', name: 'posts.edit', methods: ['GET', 'POST'])]
     public function edit(Post $post, Request $request, ManagerRegistry $doctrine): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('POST_EDIT', $post);
 
         $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
@@ -95,7 +95,7 @@ class PostController extends AbstractController
     #[Route('/{_locale}/post/{id}/delete', name: 'posts.delete', methods: ['POST'])]
     public function delete(Post $post, ManagerRegistry $doctrine): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('POST_DELETE', $post);
 
         $entityManager = $doctrine->getManager();
         $entityManager->remove($post);
