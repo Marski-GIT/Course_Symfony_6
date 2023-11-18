@@ -5,11 +5,11 @@ namespace App\Twig\Components;
 use App\Entity\Post;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent()]
+#[AsTwigComponent('PostShowComponent')]
 final class PostShowComponent
 {
     public Post $post;
     public array $isFollowing;
-    public array $isLiked;
-    public array $isDisLiked;
+    public $isLiked;
+    public $isDisliked;
 }

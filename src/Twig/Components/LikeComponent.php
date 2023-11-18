@@ -12,8 +12,11 @@ final class LikeComponent
 {
     use DefaultActionTrait;
 
-    public Post $post;
-    
+    public $post;
+
+    public $isLiked;
+    public $isDisliked;
+
     #[LiveProp(writable: true)]
     public int $likes = 0;
 
