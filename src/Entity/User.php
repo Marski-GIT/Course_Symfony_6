@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'followers')]
     private Collection $following;
 
-    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'usersThatLiked')]
+    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'usersThatLike')]
     #[ORM\JoinTable(name: 'likes')]
     private Collection $likedPosts;
 

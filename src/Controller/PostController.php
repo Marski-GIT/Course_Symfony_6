@@ -57,13 +57,13 @@ class PostController extends AbstractController
     {
         $isFollowing = $entityManager->getRepository(User::class)->isFollowing($this->getUser(), $post->getUser()) ?? false;
         $isLiked = $entityManager->getRepository(Post::class)->isLiked($this->getUser(), $post->getUser()) ?? false;
-        $isDisLiked = $entityManager->getRepository(Post::class)->isDisLiked($this->getUser(), $post->getUser()) ?? false;
+        $isDisliked = $entityManager->getRepository(Post::class)->isDisliked($this->getUser(), $post->getUser()) ?? false;
 
         return $this->render('post/show.html.twig', [
             'post'        => $post,
             'isFollowing' => $isFollowing,
             'isLiked'     => $isLiked,
-            'isDisLiked'  => $isDisLiked
+            'isDisliked'  => $isDisliked
         ]);
     }
 

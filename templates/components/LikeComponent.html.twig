@@ -1,4 +1,4 @@
-<aside id="{{ post.id }}" class="flex mr-4 items-center mt-10" {{ attributes }}>
+<aside class="flex mr-4 items-center mt-10" {{ attributes }}>
     {% if app.user %}
         {% if isLiked %}
             <a title="Undo Like" class="cursor-pointer" data-action="live#action" data-action-name="undoLike">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
@@ -7,7 +7,7 @@
         {% else %}
             <a title="Like" class="cursor-pointer" data-action="live#action" data-action-name="like">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
         {% endif %}
-        <span class="text-lg mr-1 ml-1">({{ post.usersThatLiked|length }})</span>
+        <span class="text-lg mr-1 ml-1">({{ post.usersThatLike|length }})</span>
 
         {% if isDisliked ?? false %}
             <a title="Undo dislike" class="ml-4 cursor-pointer" data-action="live#action" data-action-name="undoDislike">{{ component('UnlikeIconComponent', {class:'fill-red-500 hover:stroke-cyan-700 rotate-180'}) }}</a>

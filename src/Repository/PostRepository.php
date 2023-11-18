@@ -54,7 +54,7 @@ class PostRepository extends ServiceEntityRepository
             ->select('p.id')
             ->andWhere('p.id = :postId')
             ->andWhere('p.user = :authUser')
-            ->innerJoin('p.usersThatLiked', 'usersThatLiked')
+            ->innerJoin('p.usersThatLike', 'usersThatLike')
             ->setParameter('authUser', $authUser)
             ->setParameter('postId', $postId)
             ->setMaxResults(1)
@@ -62,7 +62,7 @@ class PostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function isDisLiked($authUser, $postId): array
+    public function isDisliked($authUser, $postId): array
     {
         return $this->createQueryBuilder('p')
             ->select('p.id')

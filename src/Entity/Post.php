@@ -40,7 +40,7 @@ class Post
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedPosts')]
     #[ORM\JoinTable(name: 'likes')]
-    private Collection $usersThatLiked;
+    private Collection $usersThatLike;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'dislikedPosts')]
     #[ORM\JoinTable(name: 'dislikes')]
@@ -48,7 +48,7 @@ class Post
 
     public function __construct()
     {
-        $this->usersThatLiked = new ArrayCollection();
+        $this->usersThatLike = new ArrayCollection();
         $this->usersThatDontLike = new ArrayCollection();
     }
 
@@ -120,25 +120,25 @@ class Post
     /**
      * @return Collection<int, User>
      */
-    public function getUsersThatLiked(): Collection
+    public function getUsersThatLike(): Collection
     {
-        return $this->usersThatLiked;
+        return $this->usersThatLike;
     }
 
-    public function addUsersThatLiked(User $usersThatLiked): static
+    public function addUsersThatLike(User $usersThatLike): static
     {
-        if (!$this->usersThatLiked->contains($usersThatLiked)) {
-            $this->usersThatLiked->add($usersThatLiked);
-            $usersThatLiked->addLikedPost($this);
+        if (!$this->usersThatLike->contains($usersThatLike)) {
+            $this->usersThatLike->add($usersThatLike);
+            $usersThatLike->addLikedPost($this);
         }
 
         return $this;
     }
 
-    public function removeUsersThatLiked(User $usersThatLiked): static
+    public function removeUsersThatLike(User $usersThatLike): static
     {
-        if ($this->usersThatLiked->removeElement($usersThatLiked)) {
-            $usersThatLiked->removeLikedPost($this);
+        if ($this->usersThatLik->removeElement($usersThatLike)) {
+            $usersThatLike->removeLikedPost($this);
         }
 
         return $this;

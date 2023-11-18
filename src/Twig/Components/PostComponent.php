@@ -8,5 +8,5 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent('PostComponent')]
 final class PostComponent
 {
-    public Post $post;
+    public $post;
 }
