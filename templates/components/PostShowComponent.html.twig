@@ -12,7 +12,7 @@
             <a href="{{ path('posts.index') }}" class=" inline font-bold border text-sm px-6 py-2 text-black rounded bg-white hover:bg-gray-100">{% trans %}Back{% endtrans %}</a>
         </div>
 
-        {{ component('LikeComponent') }}
+        {{ component('LikeComponent', {post: post}) }}
 
         {% if app.user and app.user.id != post.user.id %}
             {% if isFollowing %}
@@ -27,5 +27,5 @@
             {% endif %}
         {% endif %}
     </div>
-    
+
 </article>

@@ -27,7 +27,7 @@ class PostFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
 
             $user = new User();
             $email = $faker->email;
@@ -38,7 +38,7 @@ class PostFixtures extends Fixture
 
             $manager->persist($user);
 
-            for ($j = 1; $j <= 5; $j++) {
+            for ($j = 1; $j <= 10; $j++) {
                 $post = new Post();
                 $post->setTitle($faker->sentence(10));
                 $post->setContent($faker->text(3000));

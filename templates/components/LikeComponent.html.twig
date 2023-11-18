@@ -1,20 +1,18 @@
-<aside class="flex items-center justify-between mt-10">
-    <div class="flex mr-4 items-center">
-        {% if app.user %}
-            <a title="Undo like" class="cursor-pointer">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
-            <a title="You disliked this" class="ml-2 mr-1">{{ component('LikeIconComponent', {class:'fill-green-300'}) }}</a>
-            <span class="text-lg mr-1 ml-1">(13)</span>
+<aside id="{{ post.id }}" class="flex mr-4 items-center mt-10" {{ attributes }}>
+    {% if app.user %}
+        <a title="Like" class="cursor-pointer" data-action="live#action" data-action-name="like">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
+        <a title="You disliked this" class="ml-2 mr-1" data-action="live#action" data-action-name="undoLike">{{ component('UnlikeIconComponent', {class:'fill-red-300 rotate-180'}) }}</a>
+        <span class="text-lg mr-1 ml-1">({{ this.likes }})</span>
 
-            <a title="Undo dislike" class="ml-4 cursor-pointer">{{ component('UnlikeIconComponent', {class:'fill-red-500 hover:stroke-cyan-700 rotate-180'}) }}</a>
-            <a title="You like this post" class="ml-2 mr-1">{{ component('UnlikeIconComponent', {class:'fill-red-300 rotate-180'}) }}</a>
-            <span class="text-lg mr-1 ml-1">(4)</span>
-        {% else %}
-            <a title="login to like" href="#" class="pointer-events-none">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
-            <span class="text-lg mr-1 ml-1">(13)</span>
-            <span>Login to like</span>
-            <a title="login to dislike" href="#" class="pointer-events-none ml-2">{{ component('UnlikeIconComponent', {class:'fill-red-500 hover:stroke-cyan-700 rotate-180'}) }}</a>
-            <span class="text-lg mr-1 ml-1">(4)</span>
-            <span>Login to dislike</span>
-        {% endif %}
-    </div>
+        <a title="Undo dislike" class="ml-4 cursor-pointer" data-action="live#action" data-action-name="dislike">{{ component('UnlikeIconComponent', {class:'fill-red-500 hover:stroke-cyan-700 rotate-180'}) }}</a>
+        <a title="You like this post" class="ml-2 mr-1" data-action="live#action" data-action-name="undoDislike">{{ component('LikeIconComponent', {class:'fill-green-300'}) }}</a>
+        <span class="text-lg mr-1 ml-1">({{ this.dislikes }})</span>
+    {% else %}
+        <a title="login to like" href="#" class="pointer-events-none">{{ component('LikeIconComponent', {class:'fill-green-500 hover:stroke-cyan-700'}) }}</a>
+        <span class="text-lg mr-1 ml-1">(13)</span>
+        <span>Login to like</span>
+        <a title="login to dislike" href="#" class="pointer-events-none ml-2">{{ component('UnlikeIconComponent', {class:'fill-red-500 hover:stroke-cyan-700 rotate-180'}) }}</a>
+        <span class="text-lg mr-1 ml-1">(4)</span>
+        <span>Login to dislike</span>
+    {% endif %}
 </aside>

@@ -37,12 +37,12 @@
                         <b>{% trans %}People that you follow{% endtrans %}:</b>
                         <ul class="m-1">
                             {% for follower in app.user.getFollowing() %}
-                            <li>
-                                <a href="{{ path('posts.user', {id: follower.getId()}) }}" class="hover:text-stone-500">{{ follower.getName() }}</a>
-                                <a href="{{ path('toggleFollow', {user: follower.getId()}) }}" class="ml3 inline font-bold text-sm px-4 py-1 text-white rounded bg-blue-500 hover:bg-blue-600">{% trans %}Unfollow{% endtrans %}</a>
-                            </li>
+                                <li>
+                                    <a href="{{ path('posts.user', {id: follower.getId()}) }}" class="hover:text-stone-500">{{ follower.getName() }}</a>
+                                    <a href="{{ path('toggleFollow', {user: follower.getId()}) }}" class="ml3 inline font-bold text-sm px-4 py-1 text-white rounded bg-blue-500 hover:bg-blue-600">{% trans %}Unfollow{% endtrans %}</a>
+                                </li>
+                            {% endfor %}
                         </ul>
-                        {% endfor %}
                     </div>
                     <div x-show="tab === 3">
                         <b>{% trans %}Posts you liked{% endtrans %}:</b>
