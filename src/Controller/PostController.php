@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use DateTimeImmutable;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Pusher\ApiErrorException;
+use Pusher\PusherException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +14,7 @@ use App\Entity\{Post, User};
 use App\Form\PostFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Pusher\Pusher;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class PostController extends AbstractController
@@ -25,14 +29,17 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws PusherException
+     * @throws ApiErrorException
+     * @throws GuzzleException
+     */
     #[Route('/{_locale}/post/new', name: 'posts.new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Pusher $pusher): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+        
         $post = new Post();
-        $post->setTitle('Title post #1');
-        $post->setContent('POst Content.');
         $post->setUser($this->getUser());
         $post->setCreatedAt(new DateTimeImmutable('now'));
 
@@ -43,6 +50,8 @@ class PostController extends AbstractController
 
             $entityManager->persist($post);
             $entityManager->flush();
+
+            $pusher->trigger('my_chanel', 'new-post-event', 'New post: <a href="' . $this->generateUrl('posts.show', ['id' => $post->getId()]) . '">' . $post->getTitle() . '</a>');
 
             return $this->redirectToRoute('posts.index');
         }
