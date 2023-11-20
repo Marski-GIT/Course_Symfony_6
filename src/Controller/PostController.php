@@ -15,10 +15,18 @@ use App\Form\PostFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Pusher\Pusher;
+use App\Services\TestCalculator;
 
 #[Route('/', requirements: ['_locale' => 'en|pl'])]
 class PostController extends AbstractController
 {
+    #[Route('/test', methods: ['GET'])]
+    public function test(TestCalculator $calculator): Response
+    {
+        return new Response('<h1>' . $calculator->add(1, 1) . '</h1>');
+    }
+
+
     #[Route('/{_locale}', name: 'posts.index', methods: ['GET'])]
     public function index(Request $request, ManagerRegistry $doctrine, string $_locale = 'en'): Response
     {
@@ -38,7 +46,7 @@ class PostController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, Pusher $pusher): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        
+
         $post = new Post();
         $post->setUser($this->getUser());
         $post->setCreatedAt(new DateTimeImmutable('now'));
