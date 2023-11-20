@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ApiController extends AbstractController
 {
@@ -41,10 +43,41 @@ class ApiController extends AbstractController
                 'message' => $e->getMessage()
             ], 400);
         }
+    }
 
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path'    => 'src/Controller/Api/ApiController.php',
-        ]);
+    #[Route('/api/register')]
+    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): JsonResponse
+    {
+
+        try {
+            $data = json_decode($request->getContent(), true);
+
+            if (!$data && !$data['name'] && !$data['email'] && !$data['password']) {
+                throw new \Exception('data not valid');
+            }
+
+            $user = new User();
+
+            $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
+            $user->setName($data['name']);
+            $user->setEmail($data['email']);
+            $user->setPassword($hashedPassword);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->json([
+                'message' => 'User registered!'
+            ], 201);
+
+
+        } catch (\Exception $e) {
+
+            return $this->json([
+                'error'   => 'User not registered!',
+                'message' => $e->getMessage()
+            ], 400);
+        }
+
     }
 }
